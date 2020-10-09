@@ -18,9 +18,13 @@ export const MainScreen = ({ navigation }) => {
     const getRandomQuizHandler = () => {
         const randomTest = Math.floor(Math.random() * quizAll.length)
         dispatch(getRandomQuiz(quizAll[randomTest].name))
-        navigation.navigate('Quiz', { name: dispatch(getRandomQuiz(quizAll[randomTest].name)).currentQuiz })
+        const currentQuiz = dispatch(getRandomQuiz(quizAll[randomTest].name)).currentQuiz
+        navigation.navigate('Quiz', {
+            name: currentQuiz,
+            quiz: quizAll.find(el => el.name === currentQuiz)
+        })
     }
-
+    
     const counterTests = () => {
         return quizAll.length
     }

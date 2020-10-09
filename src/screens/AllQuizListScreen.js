@@ -13,7 +13,7 @@ export const AllQuizListScreen = ({ navigation }) => {
         dispatch(getAllQuizThunk())
     }, [])
     const onOpen = (quiz) => {
-        navigation.navigate('Quiz', { name: quiz.name })
+        navigation.navigate('Quiz', { name: quiz.name, quiz })
     }
     return (
         <View style={styles.wrapper}>
@@ -24,6 +24,6 @@ export const AllQuizListScreen = ({ navigation }) => {
 }
 const styles = StyleSheet.create({
     wrapper: {
-        padding: 15
+        paddingHorizontal: 10
     }
 })

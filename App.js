@@ -60,13 +60,20 @@ export default function App() {
       backgroundColor: THEME.MAIN_COLOR
     },
   })
+  const stylesQuizScreen = ({ route, navigation }) => ({
+    headerTitle: route.params.quiz.en,
+    headerTintColor: '#fff',
+    headerStyle: {
+      backgroundColor: THEME.MAIN_COLOR
+    },
+  })
   return (
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name={'Drawers'} component={Drawers} options={stylesMainScreen} />
           <Stack.Screen name={'Main'} component={MainScreen} />
-          <Stack.Screen name={'Quiz'} component={QuizScreen} />
+          <Stack.Screen name={'Quiz'} component={QuizScreen} options={stylesQuizScreen} />
           <Drawer.Screen name={'AllQuiz'} component={AllQuizListScreen} />
         </Stack.Navigator>
       </NavigationContainer>

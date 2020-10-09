@@ -13,7 +13,6 @@ const defaultState = {
     answers: [],
     resultText: null,
     inactiveButtons: false,
-    hideArrow: false,
 }
 export const quizReducer = (state = defaultState, action) => {
     switch (action.type) {
@@ -24,10 +23,10 @@ export const quizReducer = (state = defaultState, action) => {
             return { ...state, step: state.step += 1 }
         }
         case (GET_QUIZ): {
-            return { ...state, currentQuiz: action.currentQuiz, hideArrow: true }
+            return { ...state, currentQuiz: action.currentQuiz }
         }
         case (GET_RANDOM_QUIZ): {
-            return { ...state, currentQuiz: action.currentQuiz, hideArrow: true }
+            return { ...state, currentQuiz: action.currentQuiz }
         }
         case (CHECK_ANSWER): {
             return {

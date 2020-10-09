@@ -24,13 +24,14 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     imageBlock: {
-        width: screen.width,
+        width: screen.width - 30,
         height: 200,
+        marginTop: 10
     },
     image: {
         width: '100%',
         height: '100%',
-        borderRadius: 20
+        borderRadius: 10,
     },
     textBlock: {
 
