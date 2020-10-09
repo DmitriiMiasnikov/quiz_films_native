@@ -2,15 +2,15 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllQuizThunk } from '../store/reducers/MainPageReducer';
+import { getSerialsQuizThunk } from '../store/reducers/MainPageReducer';
 
 import { Quiz } from './../components/Quiz'
 
-export const AllQuizListScreen = ({ navigation }) => {
-    const data = useSelector(state => state.mainPage.quizAll)
+export const SerialsQuizListScreen = ({ navigation }) => {
+    const data = useSelector(state => state.mainPage.quizSerials);
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(getAllQuizThunk())
+        dispatch(getSerialsQuizThunk())
     }, [])
     const onOpen = (quiz) => {
         navigation.navigate('Quiz', { name: quiz.name, quiz })

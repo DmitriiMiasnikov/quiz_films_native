@@ -10,6 +10,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { MainScreen } from './src/screens/MainScreen';
 import store from './src/store/store';
 import { AllQuizListScreen } from './src/screens/AllQuizListScreen';
+import { FilmsQuizListScreen } from './src/screens/FilmsQuizListScreen';
+import { SerialsQuizListScreen } from './src/screens/SerialsQuizListScreen';
 import { AppHeaderIcon } from './src/components/AppHeaderIcon';
 import { THEME } from './src/theme'
 import { QuizScreen } from './src/screens/QuizScreen';
@@ -21,6 +23,10 @@ const getTitle = (route) => {
       return 'Main page';
     case 'AllQuiz':
       return 'All quiz';
+    case 'FilmsQuiz':
+      return 'Films quiz';
+    case 'SerialsQuiz':
+      return 'Serials quiz';
   }
 }
 
@@ -38,10 +44,31 @@ const Drawers = () => {
       return <Ionicons name={'ios-menu'} size={25} color={color} />
     },
   })
+  const FilmsQuizStyles = ({
+    title: 'Films quiz',
+    drawerIcon: ({ focused, color, size }) => {
+      return <Ionicons name={'ios-menu'} size={25} color={color} />
+    },
+  })
+  const SerialsQuizStyles = ({
+    title: 'Serials quiz',
+    drawerIcon: ({ focused, color, size }) => {
+      return <Ionicons name={'ios-menu'} size={25} color={color} />
+    },
+  })
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator drawerOptions={{
+      activeTintColor: THEME.MAIN_COLOR, inactiveTintColor: 'grey',
+      activeBackgroundColor: Platform.OS === 'android' ? THEME.MAIN_COLOR : 'white',
+    }} drawerContentOptions={{
+      labelStyle: {
+        fontSize: 20
+      }
+    }}>
       <Drawer.Screen name={'Main'} component={MainScreen} options={MainStyles} />
       <Drawer.Screen name={'AllQuiz'} component={AllQuizListScreen} options={AllQuizStyles} />
+      <Drawer.Screen name={'FilmsQuiz'} component={FilmsQuizListScreen} options={FilmsQuizStyles} />
+      <Drawer.Screen name={'SerialsQuiz'} component={SerialsQuizListScreen} options={SerialsQuizStyles} />
     </Drawer.Navigator>
   )
 }
@@ -74,7 +101,9 @@ export default function App() {
           <Stack.Screen name={'Drawers'} component={Drawers} options={stylesMainScreen} />
           <Stack.Screen name={'Main'} component={MainScreen} />
           <Stack.Screen name={'Quiz'} component={QuizScreen} options={stylesQuizScreen} />
-          <Drawer.Screen name={'AllQuiz'} component={AllQuizListScreen} />
+          <Stack.Screen name={'AllQuiz'} component={AllQuizListScreen} />
+          <Stack.Screen name={'FilmsQuiz'} component={FilmsQuizListScreen} />
+          <Stack.Screen name={'SerialsQuiz'} component={SerialsQuizListScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

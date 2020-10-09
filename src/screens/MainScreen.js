@@ -28,6 +28,7 @@ export const MainScreen = ({ navigation }) => {
     const counterTests = () => {
         return quizAll.length
     }
+    
     if (loading) {
         return <View style={styles.loading}>
             <ActivityIndicator color={THEME.MAIN_COLOR} />
