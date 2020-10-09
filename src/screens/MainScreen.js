@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, ActivityIndicator  } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRandomQuiz } from '../store/reducers/quizReducer';
 import { THEME } from '../theme';
 import { getAllQuizThunk } from './../store/reducers/MainPageReducer'
 
-export const MainScreen = ({ }) => {
+export const MainScreen = ({ navigation }) => {
     const dispatch = useDispatch()
-    const quizAll = useSelector(state => state.mainPage.quizAll)
+    const quizAll = useSelector(state => state.mainPage.quizAll);
+    const loading = useSelector(state => state.mainPage.loading);
 
     useEffect(() => {
         dispatch(getAllQuizThunk())
@@ -16,10 +18,16 @@ export const MainScreen = ({ }) => {
     const getRandomQuizHandler = () => {
         const randomTest = Math.floor(Math.random() * quizAll.length)
         dispatch(getRandomQuiz(quizAll[randomTest].name))
-        return dispatch(getRandomQuiz(quizAll[randomTest]))
+        navigation.navigate('Quiz', { name: dispatch(getRandomQuiz(quizAll[randomTest].name)).currentQuiz })
     }
+
     const counterTests = () => {
         return quizAll.length
+    }
+    if (loading) {
+        return <View style={styles.loading}>
+            <ActivityIndicator color={THEME.MAIN_COLOR} />
+        </View>
     }
 
     return (
@@ -39,7 +47,7 @@ export const MainScreen = ({ }) => {
                     total tests: {counterTests()}
                 </Text>
             </View>
-            <TouchableOpacity style={styles.buttonRandomTest} onPress={() => getRandomQuizHandler()}>
+            <TouchableOpacity style={styles.buttonRandomTest} activeOpacity={0.8} onPress={() => getRandomQuizHandler()}>
                 <Text style={styles.buttonRandomTestText}>
                     start random test
                 </Text>
@@ -50,6 +58,11 @@ export const MainScreen = ({ }) => {
 const styles = StyleSheet.create({
     wrapper: {
         textAlign: 'center',
+        alignItems: 'center'
+    },
+    loading: {
+        flex: 1,
+        justifyContent: 'center',
         alignItems: 'center'
     },
     title: {

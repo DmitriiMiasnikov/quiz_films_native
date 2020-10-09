@@ -4,12 +4,14 @@ const GET_ALL_QUIZ = 'GET_ALL_QUIZ';
 const GET_FILMS_QUIZ = 'GET_FILMS_QUIZ';
 const GET_SERIALS_QUIZ = 'GET_SERIALS_QUIZ';
 const SET_QUIZ_LIST = 'SET_QUIZ_LIST';
+const LOADED = 'LOADED'
 
 const defaultState = {
     quizAll: [],
     quizFilms: [],
     quizSerials: [],
     quizList: null,
+    loading: true
 }
 
 export const mainPageReducer = (state = defaultState, action) => {
@@ -26,9 +28,15 @@ export const mainPageReducer = (state = defaultState, action) => {
         case (SET_QUIZ_LIST): {
             return { ...state, quizList: action.quiz }
         }
+        case (LOADED): {
+            return { ...state, loading: false }
+        }
         default: break;
     }
     return state;
+}
+export const loaded = () => {
+    return { type: LOADED }
 }
 export const getAllQuiz = (setQuiz) => {
     return { type: GET_ALL_QUIZ, setQuiz }
@@ -45,8 +53,21 @@ export const setQuizList = (quiz) => {
 export const getAllQuizThunk = () => {
     return async (dispatch) => {
         const response = await http.get('https://quiz-films-native.firebaseio.com//quiz.json')
+        dispatch(loaded());
         dispatch(getAllQuiz(response))
+    }
+}
+export const getFilmsQuizThunk = () => {
+    return async (dispatch) => {
+        const response = await http.get('https://quiz-films-native.firebaseio.com//quiz.json')
+        dispatch(loaded());
         dispatch(getFilmsQuiz(response.filter(el => el.type === 'films')))
+    }
+}
+export const getSerialsQuizThunk = () => {
+    return async (dispatch) => {
+        const response = await http.get('https://quiz-films-native.firebaseio.com//quiz.json')
+        dispatch(loaded());
         dispatch(getSerialsQuiz(response.filter(el => el.type === 'serials')))
     }
 }

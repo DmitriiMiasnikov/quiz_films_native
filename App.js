@@ -12,6 +12,7 @@ import store from './src/store/store';
 import { AllQuizListScreen } from './src/screens/AllQuizListScreen';
 import { AppHeaderIcon } from './src/components/AppHeaderIcon';
 import { THEME } from './src/theme'
+import { QuizScreen } from './src/screens/QuizScreen';
 
 const getTitle = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? 'Main';
@@ -65,6 +66,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name={'Drawers'} component={Drawers} options={stylesMainScreen} />
           <Stack.Screen name={'Main'} component={MainScreen} />
+          <Stack.Screen name={'Quiz'} component={QuizScreen} />
           <Drawer.Screen name={'AllQuiz'} component={AllQuizListScreen} />
         </Stack.Navigator>
       </NavigationContainer>
