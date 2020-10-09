@@ -1,25 +1,75 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import React from 'react';
+import { StyleSheet, Text, Platform } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator, DrawerActions } from '@react-navigation/drawer';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { Ionicons } from '@expo/vector-icons';
 
 import { MainScreen } from './src/screens/MainScreen';
-import store from './src/store/store'
+import store from './src/store/store';
+import { AllQuizListScreen } from './src/screens/AllQuizListScreen';
+import { AppHeaderIcon } from './src/components/AppHeaderIcon';
 
+const getTitle = (route) => {
+  const routeName = getFocusedRouteNameFromRoute(route) ?? 'Main';
+  switch (routeName) {
+    case 'Main':
+      return 'Main page';
+    case 'AllQuiz':
+      return 'All quiz';
+  }
+}
+
+const Drawer = createDrawerNavigator();
+const Drawers = () => {
+  const MainStyles = ({
+    title: 'Main page',
+    drawerIcon: ({ focused, color, size }) => {
+      return <Ionicons name={'ios-menu'} size={25} color={color} />
+    },
+  })
+  const AllQuizStyles = ({
+    title: 'All quiz',
+    drawerIcon: ({ focused, color, size }) => {
+      return <Ionicons name={'ios-menu'} size={25} color={color} />
+    },
+  })
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name={'Main'} component={MainScreen} options={MainStyles} />
+      <Drawer.Screen name={'AllQuiz'} component={AllQuizListScreen} options={AllQuizStyles} />
+    </Drawer.Navigator>
+  )
+}
 
 const Stack = createStackNavigator()
 export default function App() {
-  const stylesMainScreen = () => ({
-    headerTitle: 'Главная страница',
-
+  const stylesMainScreen = ({ route, navigation }) => ({
+    headerTitle: (
+      <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+        <Item title={'Take photo'} iconName={'ios-menu'} onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />
+        <Text style={styles.title}>{getTitle(route)}</Text>
+      </HeaderButtons>
+    ),
   })
   return (
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name={'Main'} component={MainScreen} options={stylesMainScreen} />
+          <Stack.Screen name={'Drawers'} component={Drawers} options={stylesMainScreen} />
+          <Stack.Screen name={'Main'} component={MainScreen} />
+          <Drawer.Screen name={'AllQuiz'} component={AllQuizListScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
   );
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 22,
+    color: Platform.OS === 'android' ? 'white' : THEME.MAIN_COLOR
+  }
+})
