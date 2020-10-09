@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRandomQuiz } from '../store/reducers/quizReducer';
+import { THEME } from '../theme';
 import { getAllQuizThunk } from './../store/reducers/MainPageReducer'
 
 export const MainScreen = ({ }) => {
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 30,
-        backgroundColor: '#647387'
+        backgroundColor: THEME.MAIN_COLOR
     },
     buttonRandomTestText: {
         fontSize: 24,

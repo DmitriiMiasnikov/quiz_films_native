@@ -1,9 +1,9 @@
-import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { NavigationContainer, getFocusedRouteNameFromRoute, DrawerActions } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, Platform } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator, DrawerActions } from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -11,6 +11,7 @@ import { MainScreen } from './src/screens/MainScreen';
 import store from './src/store/store';
 import { AllQuizListScreen } from './src/screens/AllQuizListScreen';
 import { AppHeaderIcon } from './src/components/AppHeaderIcon';
+import { THEME } from './src/theme'
 
 const getTitle = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? 'Main';
@@ -53,6 +54,10 @@ export default function App() {
         <Text style={styles.title}>{getTitle(route)}</Text>
       </HeaderButtons>
     ),
+    headerTintColor: '#fff',
+    headerStyle: {
+      backgroundColor: THEME.MAIN_COLOR
+    },
   })
   return (
     <Provider store={store}>
