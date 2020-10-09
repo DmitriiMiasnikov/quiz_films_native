@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+
+const screen = Dimensions.get('screen');
 
 export const Quiz = ({ item, onOpen }) => {
     return (
@@ -22,12 +24,13 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     imageBlock: {
-        width: '80%',
-        height: 200
+        width: screen.width,
+        height: 200,
     },
     image: {
         width: '100%',
-        height: '100%'
+        height: '100%',
+        borderRadius: 20
     },
     textBlock: {
 
