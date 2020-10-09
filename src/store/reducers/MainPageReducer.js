@@ -44,8 +44,7 @@ export const setQuizList = (quiz) => {
 }
 export const getAllQuizThunk = () => {
     return async (dispatch) => {
-        const response = await http.get('https://quiz-films-native.firebaseio.com//tests.json')
-        console.log(response);
+        const response = await http.get('https://quiz-films-native.firebaseio.com//quiz.json')
         dispatch(getAllQuiz(response))
         dispatch(getFilmsQuiz(response.filter(el => el.type === 'films')))
         dispatch(getSerialsQuiz(response.filter(el => el.type === 'serials')))
