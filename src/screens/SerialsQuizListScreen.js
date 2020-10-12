@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSerialsQuizThunk } from '../store/reducers/MainPageReducer';
+import { getQuiz } from '../store/reducers/quizReducer';
 
 import { Quiz } from './../components/Quiz'
 
@@ -13,6 +14,7 @@ export const SerialsQuizListScreen = ({ navigation }) => {
         dispatch(getSerialsQuizThunk())
     }, [])
     const onOpen = (quiz) => {
+        dispatch(getQuiz(quiz))
         navigation.navigate('Quiz', { name: quiz.name, quiz })
     }
 
