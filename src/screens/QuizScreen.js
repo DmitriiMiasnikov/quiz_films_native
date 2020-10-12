@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAnswer, toggleInactiveButtons, stepUp, getResultText } from './../store/reducers/quizReducer';
 
 import { Result } from './../components/Result'
 
-export const QuizScreen = ({ }) => {
+const window = Dimensions.get('window');
+
+export const QuizScreen = ({ navigation }) => {
     const currentQuiz = useSelector(state => state.quiz.currentQuiz)
     const answersState = useSelector(state => state.quiz.answers)
     const step = useSelector(state => state.quiz.step);
@@ -55,19 +57,22 @@ export const QuizScreen = ({ }) => {
         }
     }, [hidePrevImage])
 
-    const content = !currentQuiz ? <View></View> :
-        <View style={styles.wrapper}>
+    let content;
+    if (!currentQuiz) {
+        content = <View></View>
+        navigation.navigate('Main');
+    } else content = <View style={styles.wrapper}>
             <View style={styles.content}>
                 {
                     currentQuiz && step < currentQuiz.questions.length ? (
-                        <View style={styles.quiz, inactiveButtons ? styles.inactive : null}>
+                        <View style={styles.quiz} pointerEvents={inactiveButtons ? 'none' : 'auto'}>
                             <Image source={{ uri: currentQuiz.questions[step].src }} style={styles.image}></Image>
                             <View style={styles.questions}>
                                 {
                                     currentQuiz.questions[step].options.map((el, i) => {
                                         return <TouchableOpacity style={styles.question} key={i}
                                             onPress={() => checkAnswerFunc(el, step, i)}>
-                                            <Text>{el}</Text>
+                                            <Text style={styles.questionsText}>{el}</Text>
                                         </TouchableOpacity>
                                     })
                                 }
@@ -85,6 +90,25 @@ export const QuizScreen = ({ }) => {
 
 const styles = StyleSheet.create({
     wrapper: {
-
+        width: window.width,
+        padding: 10
+    },
+    image: {
+        width: window.width - 20,
+        height: 250
+    },
+    questions: {
+        width: window.width - 20,
+        marginTop: 10
+    },
+    question: {
+        backgroundColor: '#C2C0CD',
+        marginBottom: 5,
+        height: 40,
+        paddingLeft: 30,
+        justifyContent: 'center'
+    },
+    questionsText: {
+        fontSize: 22
     }
 })
