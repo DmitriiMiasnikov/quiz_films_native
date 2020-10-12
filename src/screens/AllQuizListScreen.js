@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllQuizThunk } from '../store/reducers/MainPageReducer';
-import { getQuiz } from '../store/reducers/quizReducer';
+import { clear, getQuiz } from '../store/reducers/quizReducer';
 
 import { Quiz } from './../components/Quiz'
 
@@ -14,6 +14,7 @@ export const AllQuizListScreen = ({ navigation }) => {
         dispatch(getAllQuizThunk())
     }, [])
     const onOpen = (quiz) => {
+        dispatch(clear())
         dispatch(getQuiz(quiz))
         navigation.navigate('Quiz', { name: quiz.name, quiz })
     }
