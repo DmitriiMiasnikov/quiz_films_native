@@ -12,7 +12,7 @@ export const Quiz = ({ item, onOpen }) => {
             </TouchableOpacity>
             <TouchableOpacity style={styles.textBlock}>
                 <Text style={styles.text}>
-                    {item.en}
+                    {item.title}
                 </Text>
             </TouchableOpacity>
         </View>

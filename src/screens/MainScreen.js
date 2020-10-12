@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet, Text, ActivityIndicator  } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRandomQuiz } from '../store/reducers/quizReducer';
+import { getRandomQuiz, clear } from '../store/reducers/quizReducer';
 import { THEME } from '../theme';
 import { getAllQuizThunk } from './../store/reducers/MainPageReducer'
 
@@ -16,12 +16,13 @@ export const MainScreen = ({ navigation }) => {
     }, [dispatch])
 
     const getRandomQuizHandler = () => {
+        dispatch(clear())
         const randomTest = Math.floor(Math.random() * quizAll.length)
-        dispatch(getRandomQuiz(quizAll[randomTest].name))
-        const currentQuiz = dispatch(getRandomQuiz(quizAll[randomTest].name)).currentQuiz
+        dispatch(getRandomQuiz(quizAll[randomTest]))
+        const currentQuiz = dispatch(getRandomQuiz(quizAll[randomTest])).currentQuiz
         navigation.navigate('Quiz', {
-            name: currentQuiz,
-            quiz: quizAll.find(el => el.name === currentQuiz)
+            name: currentQuiz.name,
+            quiz: currentQuiz
         })
     }
     

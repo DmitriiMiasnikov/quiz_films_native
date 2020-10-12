@@ -78,7 +78,7 @@ export default function App() {
   const stylesMainScreen = ({ route, navigation }) => ({
     headerTitle: (
       <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-        <Item title={'Take photo'} iconName={'ios-menu'} onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />
+        <Item title={'open drower'} iconName={'ios-menu'} onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />
         <Text style={styles.title}>{getTitle(route)}</Text>
       </HeaderButtons>
     ),
@@ -88,11 +88,16 @@ export default function App() {
     },
   })
   const stylesQuizScreen = ({ route, navigation }) => ({
-    headerTitle: route.params.quiz.en,
+    headerTitle: route.params.quiz.title,
     headerTintColor: '#fff',
     headerStyle: {
       backgroundColor: THEME.MAIN_COLOR
     },
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+        <Item title={'go home'} iconName={'ios-home'} onPress={() => navigation.goBack()} />
+      </HeaderButtons>
+    ),
   })
   return (
     <Provider store={store}>
