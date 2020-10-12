@@ -42,10 +42,7 @@ export const quizReducer = (state = defaultState, action) => {
             }
         }
         case (RESULT_TEXT): {
-            return { ...state, resultText: {
-                ru: `Верно завершено ${action.right} из ${action.all}.`,
-                en: `Right answers ${action.right} from ${action.all}.`
-            } }
+            return { ...state, resultText: `Right answers ${action.right} from ${action.all}.`}
         }
         case (TOGGLE_INACTIVE_BUTTONS): {
             return { ...state, inactiveButtons: state.inactiveButtons ? false : true }
