@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAnswer, toggleInactiveButtons, stepUp, getResultText } from './../store/reducers/quizReducer';
 
@@ -84,9 +84,9 @@ export const QuizScreen = ({ navigation }) => {
         </View>
     </View>
     return (
-        <View>
+        <ScrollView>
             {content}
-        </View>
+        </ScrollView>
     )
 }
 
