@@ -16,7 +16,7 @@ export const Result = ({ answers, currentQuiz, resultText }) => {
                                             answers[i][1] === item && answers[i][0] === false ? styles.wrong : null,
                                             currentQuiz.questions[i].currect === el ? styles.right : null
                                         }></View>
-                                        <View style={styles.text}>{el}</View>
+                                        <View style={styles.text}><Text>{el}</Text></View>
                                     </View>
                                 })
                             }

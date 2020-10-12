@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'rea
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAnswer, toggleInactiveButtons, stepUp, getResultText } from './../store/reducers/quizReducer';
 
-import { Result } from './../components/Result'
+import { Result } from './../components/Result';
+import { ProgressBar } from './../components/ProgressBar';
 
 const window = Dimensions.get('window');
 
@@ -62,25 +63,26 @@ export const QuizScreen = ({ navigation }) => {
         content = <View></View>
         navigation.navigate('Main');
     } else content = <View style={styles.wrapper}>
-            <View style={styles.content}>
-                {
-                    currentQuiz && step < currentQuiz.questions.length ? (
-                        <View style={styles.quiz} pointerEvents={inactiveButtons ? 'none' : 'auto'}>
-                            <Image source={{ uri: currentQuiz.questions[step].src }} style={styles.image}></Image>
-                            <View style={styles.questions}>
-                                {
-                                    currentQuiz.questions[step].options.map((el, i) => {
-                                        return <TouchableOpacity style={styles.question} key={i}
-                                            onPress={() => checkAnswerFunc(el, step, i)}>
-                                            <Text style={styles.questionsText}>{el}</Text>
-                                        </TouchableOpacity>
-                                    })
-                                }
-                            </View>
-                        </View>) : <Result answers={answers} currentQuiz={currentQuiz} resultText={resultText} />
-                }
-            </View>
+        <ProgressBar answers={answersState} currentQuiz={currentQuiz} />
+        <View style={styles.content}>
+            {
+                currentQuiz && step < currentQuiz.questions.length ? (
+                    <View style={styles.quiz} pointerEvents={inactiveButtons ? 'none' : 'auto'}>
+                        <Image source={{ uri: currentQuiz.questions[step].src }} style={styles.image}></Image>
+                        <View style={styles.questions}>
+                            {
+                                currentQuiz.questions[step].options.map((el, i) => {
+                                    return <TouchableOpacity style={styles.question} key={i}
+                                        onPress={() => checkAnswerFunc(el, step, i)}>
+                                        <Text style={styles.questionsText}>{el}</Text>
+                                    </TouchableOpacity>
+                                })
+                            }
+                        </View>
+                    </View>) : <Result answers={answersState} currentQuiz={currentQuiz} resultText={resultText} />
+            }
         </View>
+    </View>
     return (
         <View>
             {content}
@@ -104,8 +106,8 @@ const styles = StyleSheet.create({
     question: {
         backgroundColor: '#C2C0CD',
         marginBottom: 5,
-        height: 40,
         paddingLeft: 30,
+        paddingVertical: 10,
         justifyContent: 'center'
     },
     questionsText: {
